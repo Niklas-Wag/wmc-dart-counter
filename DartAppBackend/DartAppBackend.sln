@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartAppBackend", "DartAppBackend\DartAppBackend.csproj", "{E8E3EE02-504F-4183-9BA0-568C49A2C55B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartDbLib", "DartDbLib\DartDbLib.csproj", "{D990B100-6DCA-49BE-81C8-5C37EE0EA0F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8E3EE02-504F-4183-9BA0-568C49A2C55B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E3EE02-504F-4183-9BA0-568C49A2C55B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E3EE02-504F-4183-9BA0-568C49A2C55B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E3EE02-504F-4183-9BA0-568C49A2C55B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D990B100-6DCA-49BE-81C8-5C37EE0EA0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D990B100-6DCA-49BE-81C8-5C37EE0EA0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D990B100-6DCA-49BE-81C8-5C37EE0EA0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D990B100-6DCA-49BE-81C8-5C37EE0EA0F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:5000
+##################################################
+
+
+################################################## Games
+GET {{baseUrl}}/api/Games/players-stats
+#####
+POST {{baseUrl}}/api/Games
+Content-type: application/json
+
+{
+   "results": 
+   [{
+      "playerid": 1,
+      "iswinner": true
+   }]
+}
+#####
+
+################################################## Players
+DELETE {{baseUrl}}/api/Players/1
+#####
+GET {{baseUrl}}/api/Players
+#####
+POST {{baseUrl}}/api/Players?name=abc
+#####
