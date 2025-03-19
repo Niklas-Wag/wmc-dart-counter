@@ -1,6 +1,9 @@
+import 'package:dart_counter_app/widgets/empty_players.dart';
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../models/player_dto.dart';
+import '../widgets/player_list.dart';
+import '../widgets/bottom_controls.dart';
 
 class StartGamePage extends StatefulWidget {
   const StartGamePage({super.key});
@@ -9,8 +12,7 @@ class StartGamePage extends StatefulWidget {
   StartGamePageState createState() => StartGamePageState();
 }
 
-class StartGamePageState extends State<StartGamePage>
-    with WidgetsBindingObserver {
+class StartGamePageState extends State<StartGamePage> {
   final ApiService apiService = ApiService();
   List<PlayerDto> players = [];
   List<PlayerDto> selectedPlayers = [];
@@ -18,20 +20,15 @@ class StartGamePageState extends State<StartGamePage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _fetchPlayers();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   Future<void> _fetchPlayers() async {
     try {
       final fetchedPlayers = await apiService.fetchPlayers();
-      setState(() => players = fetchedPlayers);
+      setState(() {
+        players = fetchedPlayers;
+      });
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -72,115 +69,16 @@ class StartGamePageState extends State<StartGamePage>
           Expanded(
             child:
                 players.isEmpty
-                    ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.group_off,
-                            size: 48,
-                            color: Colors.grey[400],
-                          ),
-                          const SizedBox(height: 16),
-                          const Text('No players found'),
-                          TextButton(
-                            onPressed:
-                                () => Navigator.pushNamed(context, '/settings'),
-                            child: const Text('Add Players'),
-                          ),
-                        ],
-                      ),
-                    )
-                    : ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: players.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      itemBuilder: (context, index) {
-                        final player = players[index];
-                        final isSelected = selectedPlayers.contains(player);
-                        return Card(
-                          elevation: 1,
-                          color:
-                              isSelected
-                                  ? Colors.blue[50]
-                                  : Theme.of(context).canvasColor,
-                          child: ListTile(
-                            title: Text(
-                              player.name ?? 'Unknown Player',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey[800],
-                              ),
-                            ),
-                            trailing: Checkbox(
-                              value: isSelected,
-                              onChanged:
-                                  (value) => setState(
-                                    () =>
-                                        value!
-                                            ? selectedPlayers.add(player)
-                                            : selectedPlayers.remove(player),
-                                  ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            onTap:
-                                () => setState(
-                                  () =>
-                                      isSelected
-                                          ? selectedPlayers.remove(player)
-                                          : selectedPlayers.add(player),
-                                ),
-                          ),
-                        );
+                    ? const EmptyPlayers()
+                    : PlayerList(
+                      players: players,
+                      selectedPlayers: selectedPlayers,
+                      onSelectionChanged: (updatedList) {
+                        setState(() => selectedPlayers = updatedList);
                       },
                     ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text(
-                      'Start Game',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    onPressed:
-                        selectedPlayers.isEmpty
-                            ? null
-                            : () => Navigator.pushNamed(
-                              context,
-                              '/game',
-                              arguments: selectedPlayers,
-                            ),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/statistics'),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.leaderboard, size: 18),
-                      SizedBox(width: 8),
-                      Text('View Statistics'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 25),
-              ],
-            ),
-          ),
+          BottomControls(selectedPlayers: selectedPlayers),
         ],
       ),
     );
