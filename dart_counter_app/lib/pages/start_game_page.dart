@@ -27,7 +27,10 @@ class StartGamePageState extends State<StartGamePage> {
     try {
       final fetchedPlayers = await apiService.fetchPlayers();
       setState(() {
+        final selectedIds = selectedPlayers.map((player) => player.id).toSet();
         players = fetchedPlayers;
+        selectedPlayers =
+            players.where((player) => selectedIds.contains(player.id)).toList();
       });
     } catch (e) {
       if (mounted) {
