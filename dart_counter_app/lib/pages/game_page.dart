@@ -1,16 +1,10 @@
 import 'dart:math';
+import 'package:dart_counter_app/models/dart_throw.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dart_counter_app/models/game_result_dto.dart';
 import 'package:dart_counter_app/services/api_service.dart';
 import 'package:dart_counter_app/models/player_dto.dart';
-
-class DartThrow {
-  final int value;
-  final int multiplier;
-
-  DartThrow({required this.value, required this.multiplier});
-}
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
